@@ -1,12 +1,12 @@
 import createLogger from 'redux-logger';
+import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { rootReducer } from '../reducers';
 
+let middlewares = [thunk];
 
-let middlewares = [];
-
-if(process.env.NODE_ENV === 'development') {
-	const logger = createLogger();
+if (process.env.NODE_ENV === 'development') {
+  const logger = createLogger();
   middlewares.push(logger);
 }
 

@@ -2,14 +2,14 @@ import React, { PropTypes } from 'react';
 
 export const List = (props) => {
 	const { handleClick, selectedId, players } = props;
-	console.log('LIST', selectedId)
+	// console.log('LIST', selectedId)
 	return (
 		<div style={{ overflow:'hidden', border: '1px solid gray' }}>
 			<div  
 			style={{ height:'40vh', overflowY: 'scroll' }}>
 			{players.map((elem) => {
 				let bg;
-				console.log('NAME:', elem.name)
+				// console.log('NAME:', elem.name)
 				elem.id === selectedId ? bg = 'yellow' : bg = 'white';
 				return <div key={elem.id} 
 										onClick={() => handleClick(elem.id, elem.name)} 

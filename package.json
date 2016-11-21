@@ -4,13 +4,14 @@
   "description": "app for coaches to inform players about matches/trainings",
   "main": "index.js",
   "scripts": {
-		"start": "webpack & NODE_ENV=production node server.js",
+    "start": "webpack & NODE_ENV=production node server.js",
     "dev": "NODE_ENV=development webpack-dev-server | NODE_ENV=development node server.js"
   },
   "author": "Oleg Korolko",
   "license": "MIT",
   "dependencies": {
     "express": "^4.14.0",
+    "firebase": "^3.6.1",
     "lodash": "^4.16.4",
     "morgan": "^1.7.0",
     "node-sass-middleware": "^0.9.8",
@@ -21,7 +22,8 @@
     "react-router": "^2.8.1",
     "react-router-redux": "^4.0.6",
     "redux": "^3.6.0",
-    "redux-logger": "^2.7.4"
+    "redux-logger": "^2.7.4",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
