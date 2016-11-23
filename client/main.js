@@ -5,15 +5,26 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import App from './components/App';
+import SignUpContainer from './containers/SignUpContainer';
+import SignInContainer from './containers/SignInContainer';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Test from './containers/Test'
 
 
+
+injectTapEventPlugin();
 
 const store = configureStore();
 
 render(
   <Provider store={store}>
+    <MuiThemeProvider>
     <Router history={browserHistory}>
+       <Route path="/signup" component={SignUpContainer} />
+       <Route path="/signin" component={SignInContainer} />
       <Route path="/(:line)" component={App} />
     </Router>
+    </MuiThemeProvider>
   </Provider>, document.getElementById('app')
 );

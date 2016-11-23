@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import ListContainer from '../containers/ListContainer';
 import GridContainer from '../containers/GridContainer';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class App extends React.Component {
 	constructor(props) {
@@ -15,6 +16,7 @@ class App extends React.Component {
 		let prev = `/${currentLine - 1}`;
 		return (
 			<div style={{height:"90vh"}}>
+      <RaisedButton label="Default" />
 				<GridContainer line={currentLine} />
 					<ListContainer />
 				<ul style={{listStyleType: 'none',
