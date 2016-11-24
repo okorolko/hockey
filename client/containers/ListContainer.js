@@ -8,6 +8,7 @@ class ListContainer extends React.Component {
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
 		this.dispatch = this.props.dispatch;
+		this.ownProps = this.props.ownProps
 	}
 	
 	handleClick(playerId, playerName) {
@@ -18,7 +19,6 @@ class ListContainer extends React.Component {
 		}
 	} 
 	render() {
-		console.log('props selectedId', this.props.selectedId)
 		return <List 
 						handleClick={this.handleClick} 
 						selectedId={this.props.selectedId}
@@ -36,7 +36,6 @@ function mapStateToProps(state) {
 		selectedId: state.list.selectedPlayerId
 	}
 }
-
 
 export default connect(mapStateToProps)(ListContainer);
 

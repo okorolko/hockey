@@ -7,11 +7,9 @@ import configureStore from './store/configureStore';
 import App from './components/App';
 import SignUpContainer from './containers/SignUpContainer';
 import SignInContainer from './containers/SignInContainer';
+import MainContainer from './containers/MainContainer';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Test from './containers/Test'
-
-
 
 injectTapEventPlugin();
 
@@ -23,6 +21,7 @@ render(
     <Router history={browserHistory}>
        <Route path="/signup" component={SignUpContainer} />
        <Route path="/signin" component={SignInContainer} />
+       <Route path="/index" component={MainContainer} />
       <Route path="/(:line)" component={App} />
     </Router>
     </MuiThemeProvider>

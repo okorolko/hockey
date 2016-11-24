@@ -19,8 +19,8 @@ const renderTextField = props => {
       errorText={props.touched && props.error}
       {...props}
     />
-)
-}
+  );
+};
 
 const renderPasswordField = props => { 
   return (
@@ -30,7 +30,7 @@ const renderPasswordField = props => {
     errorText={props.touched && props.error}
     {...props}
   />
-)
+  );
 }
 const SignIn = props => {
   const { handleSubmit, onHandleFormSubmit, pristine, reset, submitting, submittingForm } = props
