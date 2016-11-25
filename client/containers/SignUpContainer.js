@@ -52,4 +52,4 @@ SignUpContainer = reduxForm({
   validate,
 })(SignUp);
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpContainer); 
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpContainer);

@@ -7,17 +7,15 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ManagePlayersPopUp from './ManagePlayersPopUp';
 
-
-
-
-
-
-
-
 const ManagePlayers = () => {
   return (
     <div style={wrapper}>
       <Header title={'Управление учетными записями'} />
+      <ManagePlayersPopUp />
+      <ManagePlayersPopUp />
+      <ManagePlayersPopUp />
+      <ManagePlayersPopUp />
+      <ManagePlayersPopUp />
       <ManagePlayersPopUp />
     </div>
   )

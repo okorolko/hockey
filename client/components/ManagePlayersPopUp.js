@@ -4,6 +4,36 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+
+export class ManagePlayersSelect extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: 1
+    }
+  }
+  render() {
+    return (
+        <SelectField
+         floatingLabelText="Floating Label Text"
+          floatingLabelFixed={true}
+          hintText="Hint text"
+          value={this.state.value}
+          onChange={this.handleChange}
+
+        >
+          <MenuItem value={1} primaryText="Лев Нап" />
+          <MenuItem value={2} primaryText="Цен Нап" />
+          <MenuItem value={3} primaryText="Прав Нап" />
+          <MenuItem value={4} primaryText="Лев Защ" />
+          <MenuItem value={5} primaryText="Прав Защ" />
+          <MenuItem value={5} primaryText="Вратарь" />
+        </SelectField>
+    )
+  }
+}
 
 export default class ManagePlayersPopUp extends React.Component {
 
@@ -15,10 +45,10 @@ export default class ManagePlayersPopUp extends React.Component {
     };
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleTouchTap(event) {
-    // This prevents ghost click.
     event.preventDefault();
     this.setState({
       open: true,
@@ -30,6 +60,11 @@ export default class ManagePlayersPopUp extends React.Component {
     this.setState({
       open: false,
     });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log(e.target.value, 'sub')
   }
 
   render() {
@@ -51,12 +86,17 @@ export default class ManagePlayersPopUp extends React.Component {
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           onRequestClose={this.handleRequestClose}
         >
-          <Menu>
-            <MenuItem primaryText="Refresh" />
-            <MenuItem primaryText="Help &amp; feedback" />
-            <MenuItem primaryText="Settings" />
-            <MenuItem primaryText="Sign out" />
-          </Menu>
+        <form onSubmit={this.handleSubmit}>
+          <div style={wrapper} >
+            <TextField
+              floatingLabelText="Имя"
+            />
+            <ManagePlayersSelect />
+            <ManagePlayersSelect />
+
+            <div><button type="submit">Click Me!</button></div>
+          </div>
+        </form>
         </Popover>
       </div>
     );
