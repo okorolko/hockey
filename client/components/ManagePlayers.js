@@ -12,11 +12,6 @@ const ManagePlayers = () => {
     <div style={wrapper}>
       <Header title={'Управление учетными записями'} />
       <ManagePlayersPopUp />
-      <ManagePlayersPopUp />
-      <ManagePlayersPopUp />
-      <ManagePlayersPopUp />
-      <ManagePlayersPopUp />
-      <ManagePlayersPopUp />
     </div>
   )
 }

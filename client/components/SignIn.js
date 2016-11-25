@@ -46,7 +46,7 @@ const SignIn = props => {
         </div>
         <div>
           <RaisedButton type="button" label="Вернуться" secondary={true} />
-          <RaisedButton type="submit" name="DZHE" disabled={pristine || submittingForm} label="Войти" primary={true} />
+          <RaisedButton type="submit" disabled={pristine || submittingForm} label="Войти" primary={true} />
         </div>
       </form>
      </div> 

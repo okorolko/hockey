@@ -45,13 +45,13 @@ export const signIn = (email, password) => {
     }
   };
 
-export const registerUser = (email, password, team, username) => {
+export const registerUser = (email, password, team, name) => {
     return function(dispatch) {
       dispatch(signingUp())
       firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
           console.log('!!!!!success!!!!')
           dispatch(signUpSuccess())
-          createTeam(team, username, email)
+          createTeam(email, name, team)
 
         }).catch((error) => {
           console.log('!!!error!!!!', error, '--')
@@ -61,10 +61,11 @@ export const registerUser = (email, password, team, username) => {
   };
 
 
-function createTeam(team, username, email) {
+function createTeam(email, name, team) {
   const userUID = firebase.auth().currentUser.uid;
-  firebase.database().ref(`teams/${team}-${userUID}`).set({
-    username,
+  firebase.database().ref(`teams/${userUID}`).set({
     email,
+    team,
+    name
   });
 }

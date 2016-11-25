@@ -6,34 +6,8 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
+import { connect } from 'react-redux';
 
-export class ManagePlayersSelect extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      value: 1
-    }
-  }
-  render() {
-    return (
-        <SelectField
-         floatingLabelText="Floating Label Text"
-          floatingLabelFixed={true}
-          hintText="Hint text"
-          value={this.state.value}
-          onChange={this.handleChange}
-
-        >
-          <MenuItem value={1} primaryText="Лев Нап" />
-          <MenuItem value={2} primaryText="Цен Нап" />
-          <MenuItem value={3} primaryText="Прав Нап" />
-          <MenuItem value={4} primaryText="Лев Защ" />
-          <MenuItem value={5} primaryText="Прав Защ" />
-          <MenuItem value={5} primaryText="Вратарь" />
-        </SelectField>
-    )
-  }
-}
 
 export default class ManagePlayersPopUp extends React.Component {
 
@@ -46,6 +20,8 @@ export default class ManagePlayersPopUp extends React.Component {
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChangeText = this.handleChangeText.bind(this);
+    this.handleChangeSelect = this.handleChangeSelect.bind(this);
   }
 
   handleTouchTap(event) {
@@ -62,9 +38,19 @@ export default class ManagePlayersPopUp extends React.Component {
     });
   }
 
-  handleSubmit(e) {
+  handleSubmit(e, x ,y) {
     e.preventDefault();
-    console.log(e.target.value, 'sub')
+  }
+
+  handleChangeText(e) {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+   handleChangeSelect(event, index, value) {
+    this.setState({
+      position: value
+    })
   }
 
   render() {
@@ -85,16 +71,39 @@ export default class ManagePlayersPopUp extends React.Component {
           anchorOrigin={{horizontal: 'left', vertical: 'top'}}
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           onRequestClose={this.handleRequestClose}
-        >
-        <form onSubmit={this.handleSubmit}>
+          >      
+          <form>
           <div style={wrapper} >
             <TextField
+              id="playerFirstName"
               floatingLabelText="Имя"
+              onChange={this.handleChangeText}
             />
-            <ManagePlayersSelect />
-            <ManagePlayersSelect />
-
-            <div><button type="submit">Click Me!</button></div>
+            <TextField
+              id="playerSecondName"
+              floatingLabelText="Фамилия"
+              onChange={this.handleChangeText}
+            />
+            <SelectField
+              floatingLabelText="Позиция"
+              hintText="Позиция"
+              value={this.state.position}
+              onChange={this.handleChangeSelect}
+              id="playerPosition"
+            >
+              <MenuItem value={'leftWing'} primaryText="Левый Нап" />
+              <MenuItem value={'Centre'} primaryText="Центральный Нап" />
+              <MenuItem value={'rightWing'} primaryText="Правый Нап" />
+              <MenuItem value={'leftDefenceman'} primaryText="Левый Защ" />
+              <MenuItem value={'rightDefenceman'} primaryText="Правый Защ" />
+              <MenuItem value={'goaltender'} primaryText="Вратарь" />
+            </SelectField>
+            <TextField
+              id="playerEmail"
+              floatingLabelText="e-mail"
+              onChange={this.handleChangeText}
+            />
+            <RaisedButton fullWidth={true} type="submit" label="Добавить" primary={true} />
           </div>
         </form>
         </Popover>
