@@ -1,5 +1,4 @@
 import firebase from '../firebase/database';
-const database = firebase.database();
 
 export const signUpSuccess = () => {
   return {
@@ -61,11 +60,12 @@ export const registerUser = (email, password, team, name) => {
   };
 
 
-function createTeam(email, name, team) {
+function createTeam(email, name, teamName) {
   const userUID = firebase.auth().currentUser.uid;
   firebase.database().ref(`teams/${userUID}`).set({
     email,
-    team,
-    name
+    teamName,
+    name,
+    teamPlayer: [],
   });
 }

@@ -4,6 +4,9 @@ import { grid } from './grid';
 import { list } from './list';
 import { signUp } from './signUp';
 import { signIn } from './signIn';
+import { teamPlayers } from './teamPlayers';
+import { editPlayer } from './editPlayer';
+
 
 
 
@@ -12,7 +15,9 @@ export const rootReducer = combineReducers({
   grid,
 	list,
   signIn,
-  signUp
+  signUp,
+  teamPlayers,
+  editPlayer
 });
 
 export default rootReducer;

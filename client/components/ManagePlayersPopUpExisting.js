@@ -7,23 +7,33 @@ import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import { connect } from 'react-redux';
-import { addPlayer } from '../actions/managePlayers';
+import { addPlayer, editPlayer, deletePlayer } from '../actions/managePlayers';
 
 
-class ManagePlayersPopUp extends React.Component {
-
+class ManagePlayersPopUpExisting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
+      snackbarOpen: false,
+      snackBarMessage: ''
     };
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeText = this.handleChangeText.bind(this);
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
+    this.handlePlayerDelete = this.handlePlayerDelete.bind(this);
   }
-
+  componentWillMount() {
+      this.setState({
+        id: this.props.id,
+        position: this.props.position,
+        playerFirstName: this.props.firstName,
+        playerSecondName: this.props.secondName,
+        playerEmail: this.props.email,
+      })
+  }
   handleTouchTap(event) {
     event.preventDefault();
     this.setState({
@@ -31,21 +41,22 @@ class ManagePlayersPopUp extends React.Component {
       anchorEl: event.currentTarget,
     });
   }
-
   handleRequestClose() {
     this.setState({
       open: false,
     });
   }
-
-  handleSubmit(e, data) {
-    e.preventDefault();
-    this.props.dispatch(addPlayer(this.state))
-     this.setState({
-      open: false,
-    });
+  handlePlayerDelete() {
+    this.props.dispatch(deletePlayer(this.state))
   }
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.dispatch(editPlayer(this.state))
+      this.setState({
+        open: false,
+      })
 
+  }
   handleChangeText(e) {
     this.setState({
       [e.target.id]: e.target.value
@@ -56,26 +67,24 @@ class ManagePlayersPopUp extends React.Component {
       position: value
     })
   }
-
-
   render() {
     const PopoverStyle = {
-      width: '100%'
-    }
+      width: '100%',
+    };
+    const { firstName, secondName, email } = this.props;
     return (
       <div style={{width: '100%'}}>
         <RaisedButton
           fullWidth={true}
           onTouchTap={this.handleTouchTap}
-          label="Добавить игрока"
-          secondary={true}
+          label={`${firstName} ${secondName}`}
         />
         <Popover
           style={PopoverStyle}
           open={this.state.open}
           anchorEl={this.state.anchorEl}
-          anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          anchorOrigin={{horizontal: 'middle', vertical: 'top'}}
+          targetOrigin={{horizontal: 'middle', vertical: 'top'}}
           onRequestClose={this.handleRequestClose}
           >      
           <form onSubmit={this.handleSubmit}>
@@ -84,11 +93,13 @@ class ManagePlayersPopUp extends React.Component {
               id="playerFirstName"
               floatingLabelText="Имя"
               onChange={this.handleChangeText}
+              value={this.state.playerFirstName}
             />
             <TextField
               id="playerSecondName"
               floatingLabelText="Фамилия"
               onChange={this.handleChangeText}
+              value={this.state.playerSecondName}
             />
             <SelectField
               floatingLabelText="Позиция"
@@ -108,8 +119,12 @@ class ManagePlayersPopUp extends React.Component {
               id="playerEmail"
               floatingLabelText="e-mail"
               onChange={this.handleChangeText}
+              value={this.state.playerEmail}
             />
-            <RaisedButton fullWidth={true} type="submit" label="Добавить" primary={true} />
+            <div style={{width: '100%',display: 'flex', flexFlow: 'row wrap', justifyContent: 'center'}}>
+              <RaisedButton style={{width: '45%', marginRight: '10px'}} type="submit" label="Сохранить" primary={true} />
+              <RaisedButton style={{width: '45%'}} onClick={() => {this.handlePlayerDelete()}} label="Удалить" secondary={true} />
+            </div>
           </div>
         </form>
         </Popover>
@@ -118,5 +133,4 @@ class ManagePlayersPopUp extends React.Component {
   }
 }
 
-export default connect()(ManagePlayersPopUp);
-
+export default connect()(ManagePlayersPopUpExisting);

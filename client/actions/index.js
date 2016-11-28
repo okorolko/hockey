@@ -1,5 +1,3 @@
-
-
 export const assignPlayer = (lineId, fieldId, playerId, playerName) => {
   return {
     type: 'ASSIGN_PLAYER',

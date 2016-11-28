@@ -3,9 +3,13 @@ import { Field, reduxForm } from 'redux-form';
 import SignIn from '../components/SignIn';
 import { connect } from 'react-redux';
 import { signIn } from '../actions/signInUp';
+import { browserHistory } from 'react-router';
 
 
 class SignInContainer extends Component {
+  constructor(props) {
+    super(props)
+  }
   render() {
     return (
       <SignIn 
@@ -16,7 +20,6 @@ class SignInContainer extends Component {
   }
 }
 
-
 const mapDispatchToProps = (dispatch) => {
   return {
     onHandleFormSubmit: (form) => {
@@ -25,13 +28,15 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-
 const mapStateToProps = (state) => {
+      if (state.signIn.signedIn) {
+       browserHistory.push('/manageplayers');
+      }
   return {
-    submittingForm: state.signIn.submitting
+    submittingForm: state.signIn.submitting,
+    signedIn: state.signIn.signedIn
     }
   }
-
 
 const validate = values => {
   const errors = {};
@@ -52,4 +57,4 @@ SignInContainer = reduxForm({
   validate,
 })(SignIn);
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInContainer); 
+export default connect(mapStateToProps, mapDispatchToProps)(SignInContainer);
