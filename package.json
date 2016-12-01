@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack & NODE_ENV=production node server.js",
-    "dev": "NODE_ENV=ppp webpack-dev-server | NODE_ENV=development node server.js"
+    "dev": "NODE_ENV=development webpack-dev-server | NODE_ENV=development node server.js"
   },
   "author": "Oleg Korolko",
   "license": "MIT",

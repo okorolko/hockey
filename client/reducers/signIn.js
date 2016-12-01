@@ -1,4 +1,4 @@
-export const signIn = (state = {submitting: false}, action) => {
+export const signIn = (state = {submitting: false, signedIn: true}, action) => {
 	switch (action.type) {
     case 'SIGNING_IN':
       return Object.assign({}, state, {

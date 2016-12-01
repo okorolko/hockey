@@ -31,6 +31,18 @@ export const signingIn = () => {
   }
 }
 
+
+
+
+export const signOut = () => {
+    return function(dispatch) {
+      firebase.auth().signOut().then(() => {
+        dispatch(signInError())
+      }, (err) => {
+      });
+    }
+  };
+
 export const signIn = (email, password) => {
     return function(dispatch) {
       dispatch(signingIn())
@@ -53,7 +65,7 @@ export const registerUser = (email, password, team, name) => {
           createTeam(email, name, team)
 
         }).catch((error) => {
-          console.log('!!!error!!!!', error, '--')
+          console.log('!!!error!!!!', error)
           dispatch(signUpError())
       })
     }

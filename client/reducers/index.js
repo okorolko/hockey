@@ -6,18 +6,20 @@ import { signUp } from './signUp';
 import { signIn } from './signIn';
 import { teamPlayers } from './teamPlayers';
 import { editPlayer } from './editPlayer';
-
-
+import { notify } from './notify';
+import { account } from './account';
 
 
 export const rootReducer = combineReducers({
   form: formReducer,
   grid,
-	list,
+  list,
   signIn,
   signUp,
   teamPlayers,
-  editPlayer
+  editPlayer,
+  notify,
+  account,
 });
 
 export default rootReducer;

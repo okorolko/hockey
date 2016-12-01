@@ -15,8 +15,6 @@ class ManagePlayersPopUpExisting extends React.Component {
     super(props);
     this.state = {
       open: false,
-      snackbarOpen: false,
-      snackBarMessage: ''
     };
     this.handleTouchTap = this.handleTouchTap.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
@@ -48,6 +46,9 @@ class ManagePlayersPopUpExisting extends React.Component {
   }
   handlePlayerDelete() {
     this.props.dispatch(deletePlayer(this.state))
+     this.setState({
+        open: false,
+      })
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -55,7 +56,6 @@ class ManagePlayersPopUpExisting extends React.Component {
       this.setState({
         open: false,
       })
-
   }
   handleChangeText(e) {
     this.setState({

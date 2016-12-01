@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import ManagePlayers from '../components/ManagePlayers';
 import { fetchPlayers, addPlayer } from '../actions/managePlayers';
 import { browserHistory } from 'react-router';
-import { editPlayerFinish } from '../actions/managePlayers';
+import { signOut } from '../actions/signInUp';
+import TopBar from '../components/TopBar';
 
 class ManagePlayersContainer extends React.Component {
   constructor(props) {
@@ -12,19 +13,25 @@ class ManagePlayersContainer extends React.Component {
   componentWillMount() {
     this.props.dispatch(fetchPlayers())
   }
-  //dispatch editPlayerFinish to hide <BottomSnackbar/> 
-  componentDidUpdate() {
-    if (this.props.playerEdited) {
-      setTimeout(() => {
-        this.props.dispatch(editPlayerFinish())
-      }, 3000);
+  componentDidMount() {
+    if(!this.props.signedIn) {
+      browserHistory.push('/signin')
     }
   }
+  componentDidUpdate() {
+    if (!this.props.signedIn) {
+      browserHistory.push('/signin')
+    }
+  }
+  handleSignOut() {
+    this.props.dispatch(signOut());
+  }
   render() {
-    return <ManagePlayers 
-            teamPlayers={this.props.teamPlayers}
-            playerEdited={this.props.playerEdited}
-           />
+    return (
+      <div>
+        <ManagePlayers {...this.props} />
+      </div>  
+    )
   }
 }
 
@@ -33,6 +40,7 @@ const MapStateToProps = (state) => {
     signedIn: state.signIn.signedIn,
     teamPlayers: state.teamPlayers,
     playerEdited: state.editPlayer.edited || false,
+    message: state.notify.message
   };
 };
 

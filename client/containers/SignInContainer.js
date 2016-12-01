@@ -10,6 +10,9 @@ class SignInContainer extends Component {
   constructor(props) {
     super(props)
   }
+  componentDidMount() {
+    console.log('Mounted!')
+  }
   render() {
     return (
       <SignIn 
@@ -29,14 +32,14 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-      if (state.signIn.signedIn) {
-       browserHistory.push('/manageplayers');
-      }
+  //if (state.account.user) {
+    //browserHistory.push('/manageplayers');
+  //}
   return {
-    submittingForm: state.signIn.submitting,
-    signedIn: state.signIn.signedIn
-    }
-  }
+    submittingForm: state.account.submitting,
+    user: state.account.user,
+  };
+};
 
 const validate = values => {
   const errors = {};

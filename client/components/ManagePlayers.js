@@ -10,10 +10,11 @@ import ManagePlayersPopUp from './ManagePlayersPopUp';
 import ManagePlayersPopUpExisting from './ManagePlayersPopUpExisting';
 import Preloader from './Preloader';
 import BottomSnackbar from './BottomSnackbar';
+import TopBar from './TopBar';
 
 
 const ManagePlayers = (props) => {
-  const { teamPlayers, playerEdited } = props;
+  const { teamPlayers, playerEdited, message } = props;
   let array = [];
   for (let key in teamPlayers) {
     array.push({
@@ -24,35 +25,30 @@ const ManagePlayers = (props) => {
       playerPosition: teamPlayers[key].position,
     })
   } 
+  let players;
   if (!Object.getOwnPropertyNames(teamPlayers).length > 0) {
-      return (
-        <div style={wrapper}>
-          <Header title={'Управление учетными записями'} />
-          <ManagePlayersPopUp />
-          <br />
-          <Preloader />
-        </div>
-   )
+    players = <Preloader />
   } else {
+    players =  array.map((elem) => {
+                 return <ManagePlayersPopUpExisting 
+                          key={elem.key}
+                          id={elem.key}
+                          firstName={elem.playerFirstName}
+                          secondName={elem.playerSecondName}
+                          email={elem.playerEmail}
+                          position={elem.playerPosition}
+                        />
+                })
+  }
     return (
-        <div style={wrapper}>
+        <div >
           <Header title={'Управление учетными записями'} />
           <ManagePlayersPopUp />
           <br />
-          {array.map((elem) => {
-            return <ManagePlayersPopUpExisting 
-              key={elem.key}
-              id={elem.key}
-              firstName={elem.playerFirstName}
-              secondName={elem.playerSecondName}
-              email={elem.playerEmail}
-              position={elem.playerPosition}
-            />
-          })}
-        <BottomSnackbar playerEdited={playerEdited}/>
+          {players}
+        <BottomSnackbar />
         </div>
     )
   }
-}
 
 export default ManagePlayers;

@@ -1,12 +1,10 @@
 import firebase from '../firebase/database';
-import { signInError } from './signInUp'
-
-//ADD ALL AJAX STAGES
+import { signInSuccess, signInError } from './signInUp'
 
 export const fetchPlayersSuccess = (payload) => {
   return {
     type: 'FETCH_PLAYERS_SUCCESS',
-    payload
+    payload,
   };
 };
 export const fetchPlayersError = () => {
@@ -16,30 +14,37 @@ export const fetchPlayersError = () => {
 };
 export const fetchingPlayers = () => {
   return {
-    type: 'FETCHING_PLAYERS'
-  }
-}
-
-
+    type: 'FETCHING_PLAYERS',
+  };
+};
 export const fetchPlayers = () => {
   return function(dispatch) {
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        dispatch(signInSuccess())
         const userId = firebase.auth().currentUser.uid;
         return firebase.database().ref('/teams/' + userId).once('value')
-          .then(function(snapShot) {
+          .then((snapShot) => {
             const teamPlayers = snapShot.val().teamPlayers
+            console.log('FETCH PLAYERS SUCCESS', teamPlayers)
             dispatch(fetchPlayersSuccess(teamPlayers))
-          }).catch(function(error) {
-              console.log('something went wrong', error)      
+          })
+          .catch((error) => {
+            console.log('something went wrong', error)      
           });  
+      } else {
+        dispatch(signInError())
       }
     });
-    
   };
 };
 
 
+export const addPlayerSuccess = () => {
+  return {
+    type: 'ADD_PLAYER_SUCCESS',
+  };
+};
 export const addPlayer = (data) => {
   return function(dispatch) {
     const userId = firebase.auth().currentUser.uid;
@@ -54,6 +59,7 @@ export const addPlayer = (data) => {
 
       firebase.database().ref('/teams/' + userId + '/teamPlayers').push(playerInfo)
       .then(() => {
+        dispatch(addPlayerSuccess())
         dispatch(fetchPlayers())
       });
     }).catch(function(error) {
@@ -89,24 +95,37 @@ export const editPlayer = (data) => {
     const userId = firebase.auth().currentUser.uid;
     dispatch(editingPlayer())
     return firebase.database().ref('/teams/' + userId).once('value')
-    .then(function() {
+    .then(() => {
       const playerInfo = {
         firstName: data.playerFirstName,
         secondName: data.playerSecondName,
         position: data.position,
         email: data.playerEmail,
       };
-       firebase.database().ref().child(`/teams/${userId}/teamPlayers/${data.id}`).set(playerInfo)
-    }).then(() => {
+       firebase.database().ref().child(`/teams/${userId}/teamPlayers/${data.id}`).set(playerInfo);
+    })
+    .then(() => {
       dispatch(editPlayersSuccess())
       dispatch(fetchPlayers())
+    }).catch((err) => {
+      console.log(err)
     })
   };
-}
+};
 
+
+export const deletePlayerSuccess = () => {
+  return {
+    type: 'DELETE_PLAYER_SUCCESS',
+  };
+};
 export const deletePlayer = (data) => {
   return function(dispatch) {
     const userId = firebase.auth().currentUser.uid;
-    firebase.database().ref().child(`/teams/${userId}/teamPlayers/${data.id}`).remove()
+    return firebase.database().ref().child(`/teams/${userId}/teamPlayers/${data.id}`).set(null)
+    .then(() => {
+      dispatch(deletePlayerSuccess());
+      dispatch(fetchPlayers());
+    });
   };
-}
+};

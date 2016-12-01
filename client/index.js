@@ -9,8 +9,10 @@ import SignUpContainer from './containers/SignUpContainer';
 import SignInContainer from './containers/SignInContainer';
 import MainContainer from './containers/MainContainer';
 import ManagePlayersContainer from './containers/ManagePlayersContainer';
+import ManageTasksContainer from './containers/ManageTasksContainer';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import requiresAuth from './components/requiresAuth';
 
 injectTapEventPlugin();
 
@@ -20,11 +22,14 @@ render(
   <Provider store={store}>
     <MuiThemeProvider>
     <Router history={browserHistory}>
-       <Route path="/signup" component={SignUpContainer} />
-       <Route path="/signin" component={SignInContainer} />
-       <Route path="/index" component={MainContainer} />
-       <Route path="/manageplayers" component={ManagePlayersContainer} />
-       <Route path="/(:line)" component={App} />
+      <Route path="/signup" component={SignUpContainer} />
+      <Route path="/signin" component={SignInContainer} />
+      <Route path="/" component={requiresAuth(App)}>
+        <Route path="index" component={MainContainer} />
+        <Route path="/manageplayers" title={"Команда"} component={ManagePlayersContainer} />
+        <Route path="managetasks" title={"События"} component={ManageTasksContainer} />
+        <Route path="(:line)" component={App} />
+      </Route>
     </Router>
     </MuiThemeProvider>
   </Provider>, document.getElementById('app')

@@ -15,11 +15,6 @@ export const editPlayer = (state = {}, action) => {
       editing: false,
       edited: false,
     })
-   case 'EDIT_PLAYER_FINISH':
-    return Object.assign({}, state, {
-      editing: false,
-      edited: false,
-    }) 
 	default: return state
 	}
 }

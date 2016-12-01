@@ -11,7 +11,6 @@ import { addPlayer } from '../actions/managePlayers';
 
 
 class ManagePlayersPopUp extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -63,13 +62,15 @@ class ManagePlayersPopUp extends React.Component {
       width: '100%'
     }
     return (
-      <div style={{width: '100%'}}>
+      <div style={{display: "flex", flexDirection: "column", alignItems: 'center'}}>
+         <div style={{width: "90%"}}>
         <RaisedButton
           fullWidth={true}
           onTouchTap={this.handleTouchTap}
           label="Добавить игрока"
           secondary={true}
         />
+        </div>
         <Popover
           style={PopoverStyle}
           open={this.state.open}
@@ -119,4 +120,3 @@ class ManagePlayersPopUp extends React.Component {
 }
 
 export default connect()(ManagePlayersPopUp);
-
