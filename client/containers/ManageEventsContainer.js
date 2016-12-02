@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import TaskList from '../components/TaskList';
 import TopBar from '../components/TopBar';
 import RaisedButton from 'material-ui/RaisedButton';
-import NewTaskForm from '../components/NewTaskForm';
+import CreateEventForm from '../components/CreateEventForm';
+import PopUpContainer from './PopUpContainer';
+import FormNewEventContainer from './/FormNewEventContainer'
 
-
-class ManageTasksContainer extends Component {
+class ManageEventsContainer extends Component {
   constructor(props) {
     super(props)
   }
@@ -14,7 +15,10 @@ class ManageTasksContainer extends Component {
     return (
       <div style={{display: "flex", flexDirection: "column", alignItems: 'center'}}>
         <div style={{width: "90%", paddingTop: "30px"}}>
-          <NewTaskForm />
+          <PopUpContainer buttonLabel={'Test'}>
+            {/*<CreateEventForm />*/}
+            <FormNewEventContainer />
+          </PopUpContainer>
         </div>
         <div>
         <TaskList 
@@ -29,4 +33,4 @@ class ManageTasksContainer extends Component {
   }
 }
 
-export default connect()(ManageTasksContainer);
+export default connect()(ManageEventsContainer);

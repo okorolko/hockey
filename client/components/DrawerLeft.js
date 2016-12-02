@@ -39,7 +39,7 @@ export default class DrawerLeft extends React.Component {
             title={"Hockey Reminder"}
             titleStyle={{fontWeight: '100'}}
           />
-          <Link to={'/managetasks'}><MenuItem onTouchTap={this.handleClose.bind(this)}>Управление событиями</MenuItem></Link>
+          <Link to={'/manageevents'}><MenuItem onTouchTap={this.handleClose.bind(this)}>События</MenuItem></Link>
           <Link to={'/manageplayers'}> <MenuItem onTouchTap={this.handleClose.bind(this)}>Команда</MenuItem></Link>
         </Drawer>
       </div>

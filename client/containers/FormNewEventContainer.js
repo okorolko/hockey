@@ -4,39 +4,25 @@ import SignIn from '../components/SignIn';
 import { connect } from 'react-redux';
 import { signIn } from '../actions/signInUp';
 import { browserHistory } from 'react-router';
+import FormNewEventGame from '../components/FormNewEventGame';
 
-class SignInContainer extends Component {
+class FormNewEventContainer extends Component {
   constructor(props) {
     super(props)
   }
+  onHandleFormSubmit() {
+    console.log('sub')
+  }
+
   render() {
     return (
-      <SignIn
-        onHandleFormSubmit={this.props.onHandleFormSubmit}
-        submittingForm={this.props.submittingForm}
+      <FormNewEventGame
+        onHandleFormSubmit={this.onHandleFormSubmit.bind(this)}
+        {...this.props}
       />
     );
   }
 }
-
-  const mapDispatchToProps = (dispatch) => {
-    return {
-      onHandleFormSubmit: (form) => {
-        dispatch(signIn(form.email, form.password))
-      }
-    }
-  }
-
-  const mapStateToProps = (state) => {
-    // !FIX!components lifecycle methods does not work inside SignInContainer class
-    if (state.account.user) {
-      browserHistory.push('/manageplayers');
-    }
-    return {
-      submittingForm: state.account.submitting,
-      user: state.account.user,
-    };
-  };
 
   const validate = values => {
     const errors = {};
@@ -52,17 +38,16 @@ class SignInContainer extends Component {
     return errors
   }
 
-  SignInContainer= reduxForm({
-    form: 'signIn',
-    validate,
-  })(SignIn);
-
 React.propTypes = {
     onHandleFormSubmit: PropTypes.func.isRequired,
     submittingForm: PropTypes.bool.isRequired,
     dispatch: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignInContainer);
+export default reduxForm({
+    form: 'newEventGame',
+    //validate,
+})(FormNewEventContainer);
+
 
 
