@@ -25,24 +25,29 @@ const ManagePlayers = (props) => {
       playerPosition: teamPlayers[key].position,
     })
   } 
+
+  function updateArray(obj) {
+    return Object.keys(obj).map(key => Object.assign({}, {key}, obj[key]));
+  }
+  const playersArray = updateArray(teamPlayers)
+
   let players;
   if (!Object.getOwnPropertyNames(teamPlayers).length > 0) {
     players = <Preloader />
   } else {
-    players =  array.map((elem) => {
+    players =  playersArray.map((elem) => {
                  return <ManagePlayersPopUpExisting 
                           key={elem.key}
                           id={elem.key}
-                          firstName={elem.playerFirstName}
-                          secondName={elem.playerSecondName}
-                          email={elem.playerEmail}
-                          position={elem.playerPosition}
+                          firstName={elem.firstName}
+                          lastName={elem.lastName}
+                          email={elem.email}
+                          position={elem.position}
                         />
                 })
   }
     return (
         <div >
-          <Header title={'Управление учетными записями'} />
           <ManagePlayersPopUp />
           <br />
           {players}

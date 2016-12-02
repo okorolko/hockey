@@ -52,7 +52,7 @@ export const addPlayer = (data) => {
     .then(() => {
       const playerInfo = {
         firstName: data.playerFirstName,
-        secondName: data.playerSecondName,
+        lastName: data.playerLastName,
         position: data.position,
         email: data.playerEmail,
       };

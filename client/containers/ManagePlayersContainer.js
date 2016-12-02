@@ -13,16 +13,6 @@ class ManagePlayersContainer extends React.Component {
   componentWillMount() {
     this.props.dispatch(fetchPlayers())
   }
-  componentDidMount() {
-    if(!this.props.signedIn) {
-      browserHistory.push('/signin')
-    }
-  }
-  componentDidUpdate() {
-    if (!this.props.signedIn) {
-      browserHistory.push('/signin')
-    }
-  }
   handleSignOut() {
     this.props.dispatch(signOut());
   }
@@ -37,10 +27,9 @@ class ManagePlayersContainer extends React.Component {
 
 const MapStateToProps = (state) => {
   return {
-    signedIn: state.signIn.signedIn,
     teamPlayers: state.teamPlayers,
     playerEdited: state.editPlayer.edited || false,
-    message: state.notify.message
+    message: state.notify.message,
   };
 };
 

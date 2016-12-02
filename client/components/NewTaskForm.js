@@ -7,10 +7,10 @@ import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import { connect } from 'react-redux';
-import { addPlayer } from '../actions/managePlayers';
+import { addPlayer, editPlayer, deletePlayer } from '../actions/managePlayers';
 
 
-class ManagePlayersPopUp extends React.Component {
+class NewTaskForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,8 +21,17 @@ class ManagePlayersPopUp extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChangeText = this.handleChangeText.bind(this);
     this.handleChangeSelect = this.handleChangeSelect.bind(this);
+    this.handlePlayerDelete = this.handlePlayerDelete.bind(this);
   }
-
+  componentWillMount() {
+      this.setState({
+        id: this.props.id,
+        type: 'training',
+        playerFirstName: this.props.firstName,
+        playerSecondName: this.props.secondName,
+        playerEmail: this.props.email,
+      })
+  }
   handleTouchTap(event) {
     event.preventDefault();
     this.setState({
@@ -30,21 +39,24 @@ class ManagePlayersPopUp extends React.Component {
       anchorEl: event.currentTarget,
     });
   }
-
   handleRequestClose() {
     this.setState({
       open: false,
     });
   }
-
-  handleSubmit(e, data) {
-    e.preventDefault();
-    this.props.dispatch(addPlayer(this.state))
+  handlePlayerDelete() {
+    this.props.dispatch(deletePlayer(this.state))
      this.setState({
-      open: false,
-    });
+        open: false,
+      })
   }
-
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.dispatch(editPlayer(this.state))
+      this.setState({
+        open: false,
+      })
+  }
   handleChangeText(e) {
     this.setState({
       [e.target.id]: e.target.value
@@ -52,65 +64,64 @@ class ManagePlayersPopUp extends React.Component {
   }
    handleChangeSelect(event, index, value) {
     this.setState({
-      position: value
+      type: value
     })
   }
-
-
   render() {
     const PopoverStyle = {
-      width: '100%'
-    }
+      width: '100%',
+    };
+    const { firstName, secondName, email } = this.props;
     return (
-      <div style={{display: "flex", flexDirection: "column", alignItems: 'center'}}>
-         <div style={{width: "90%"}}>
+      <div style={{width: '100%'}}>
         <RaisedButton
           fullWidth={true}
           onTouchTap={this.handleTouchTap}
-          label="Добавить игрока"
+          label={"Создать событие"}
           secondary={true}
         />
-        </div>
         <Popover
           style={PopoverStyle}
           open={this.state.open}
           anchorEl={this.state.anchorEl}
-          anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          anchorOrigin={{horizontal: 'middle', vertical: 'top'}}
+          targetOrigin={{horizontal: 'middle', vertical: 'top'}}
           onRequestClose={this.handleRequestClose}
           >      
           <form onSubmit={this.handleSubmit}>
           <div style={wrapper} >
+            <SelectField
+              floatingLabelText="Тип"
+              hintText="Тип"
+              value={this.state.type}
+              onChange={this.handleChangeSelect}
+              id="type"
+            >
+              <MenuItem value={'training'} primaryText="Тренировка" />
+              <MenuItem value={'game'} primaryText="Игра" />
+            </SelectField>
             <TextField
               id="playerFirstName"
-              floatingLabelText="Имя"
+              floatingLabelText=""
               onChange={this.handleChangeText}
+              value={this.state.playerFirstName}
             />
             <TextField
-              id="playerLastName"
+              id="playerSecondName"
               floatingLabelText="Фамилия"
               onChange={this.handleChangeText}
+              value={this.state.playerSecondName}
             />
-            <SelectField
-              floatingLabelText="Позиция"
-              hintText="Позиция"
-              value={this.state.position}
-              onChange={this.handleChangeSelect}
-              id="playerPosition"
-            >
-              <MenuItem value={'leftWing'} primaryText="Левый Нап" />
-              <MenuItem value={'Centre'} primaryText="Центральный Нап" />
-              <MenuItem value={'rightWing'} primaryText="Правый Нап" />
-              <MenuItem value={'leftDefenceman'} primaryText="Левый Защ" />
-              <MenuItem value={'rightDefenceman'} primaryText="Правый Защ" />
-              <MenuItem value={'goaltender'} primaryText="Вратарь" />
-            </SelectField>
             <TextField
               id="playerEmail"
               floatingLabelText="e-mail"
               onChange={this.handleChangeText}
+              value={this.state.playerEmail}
             />
-            <RaisedButton fullWidth={true} type="submit" label="Добавить" primary={true} />
+            <div style={{width: '100%',display: 'flex', flexFlow: 'row wrap', justifyContent: 'center'}}>
+              <RaisedButton style={{width: '45%', marginRight: '10px'}} type="submit" label="Сохранить" primary={true} />
+              <RaisedButton style={{width: '45%'}} onClick={() => {this.handlePlayerDelete()}} label="Удалить" secondary={true} />
+            </div>
           </div>
         </form>
         </Popover>
@@ -119,4 +130,4 @@ class ManagePlayersPopUp extends React.Component {
   }
 }
 
-export default connect()(ManagePlayersPopUp);
+export default connect()(NewTaskForm);

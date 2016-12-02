@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import TaskList from '../components/TaskList';
 import TopBar from '../components/TopBar';
 import RaisedButton from 'material-ui/RaisedButton';
+import NewTaskForm from '../components/NewTaskForm';
 
 
 class ManageTasksContainer extends Component {
@@ -12,16 +13,17 @@ class ManageTasksContainer extends Component {
   render() {
     return (
       <div style={{display: "flex", flexDirection: "column", alignItems: 'center'}}>
-      <div style={{width: "90%", paddingTop: "30px"}}>
-      </div>
-      <div>
-      <TaskList 
-        title={"Активные"}
-      />
-      <TaskList
-        title={"Завершенные"}
-      />
-      </div>
+        <div style={{width: "90%", paddingTop: "30px"}}>
+          <NewTaskForm />
+        </div>
+        <div>
+        <TaskList 
+          title={"Активные"}
+        />
+        <TaskList
+          title={"Завершенные"}
+        />
+        </div>
       </div>
     )
   }

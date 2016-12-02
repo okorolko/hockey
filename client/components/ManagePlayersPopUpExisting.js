@@ -28,7 +28,7 @@ class ManagePlayersPopUpExisting extends React.Component {
         id: this.props.id,
         position: this.props.position,
         playerFirstName: this.props.firstName,
-        playerSecondName: this.props.secondName,
+        playerLastName: this.props.lastName,
         playerEmail: this.props.email,
       })
   }
@@ -71,13 +71,13 @@ class ManagePlayersPopUpExisting extends React.Component {
     const PopoverStyle = {
       width: '100%',
     };
-    const { firstName, secondName, email } = this.props;
+    const { firstName, lastName, email } = this.props;
     return (
       <div style={{width: '100%'}}>
         <RaisedButton
           fullWidth={true}
           onTouchTap={this.handleTouchTap}
-          label={`${firstName} ${secondName}`}
+          label={`${firstName} ${lastName}`}
         />
         <Popover
           style={PopoverStyle}
@@ -96,10 +96,10 @@ class ManagePlayersPopUpExisting extends React.Component {
               value={this.state.playerFirstName}
             />
             <TextField
-              id="playerSecondName"
+              id="playerlastName"
               floatingLabelText="Фамилия"
               onChange={this.handleChangeText}
-              value={this.state.playerSecondName}
+              value={this.state.playerLastName}
             />
             <SelectField
               floatingLabelText="Позиция"

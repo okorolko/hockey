@@ -11,6 +11,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import NewTaskForm from './NewTaskForm';
 
 const style = {
   height: "auto",
